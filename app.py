@@ -8,10 +8,6 @@ import plotly.express as px
 
 # ==================================================
 
-st.set_page_config(
-page_title="SMU Alumni Executive Dashboard",
-layout="wide"
-)
 
 st.title("🎓 SMU Alumni Graduate Outcomes Dashboard")
 
