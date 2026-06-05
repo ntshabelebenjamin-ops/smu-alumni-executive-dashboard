@@ -371,8 +371,95 @@ st.plotly_chart(
     width="stretch",
     key="employment_chart"
 )
+    # ==================================================
+    # EMPLOYMENT SECTOR
+    # ==================================================
 
+    st.subheader("Employment Sector")
 
+    sector_df = (
+        filtered["Employment_Sector"]
+        .value_counts()
+        .reset_index()
+    )
+
+    sector_df.columns = ["Sector", "Responses"]
+
+    fig_sector = px.bar(
+        sector_df,
+        x="Responses",
+        y="Sector",
+        orientation="h",
+        text="Responses",
+        color_discrete_sequence=[SMU_ORANGE]
+    )
+
+    st.plotly_chart(
+        fig_sector,
+        width="stretch",
+        key="sector_chart"
+    )
+    # ==================================================
+    # TIME TO EMPLOYMENT
+    # ==================================================
+
+    st.subheader("Time to Employment")
+
+    time_df = (
+        filtered["Time_To_Employment"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
+
+    time_df.columns = ["Time", "Percentage"]
+
+    fig_time = px.bar(
+        time_df,
+        x="Time",
+        y="Percentage",
+        text="Percentage",
+        color_discrete_sequence=[SMU_BLUE]
+    )
+
+    fig_time.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="outside"
+    )
+
+    st.plotly_chart(
+        fig_time,
+        width="stretch",
+        key="time_chart"
+    )
+    # ==================================================
+    # QUALIFICATION RELEVANCE
+    # ==================================================
+
+    st.subheader("Qualification Relevance")
+
+    rel_df = (
+        filtered["Qualification_Relevance"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
+
+    rel_df.columns = ["Response", "Percentage"]
+
+    fig_rel = px.pie(
+        rel_df,
+        names="Response",
+        values="Percentage",
+        hole=0.5,
+        color_discrete_sequence=[SMU_BLUE, SMU_ORANGE]
+    )
+
+    st.plotly_chart(
+        fig_rel,
+        width="stretch",
+        key="relevance_chart"
+    )
 
 # ==================================================
 
