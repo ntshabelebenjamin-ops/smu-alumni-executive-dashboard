@@ -402,6 +402,11 @@ fig_sector = px.bar(
     color_discrete_sequence=[SMU_ORANGE]
 )
 
+fig_sector.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="outside"
+)
+
 st.plotly_chart(
     fig_sector,
     width="stretch",
