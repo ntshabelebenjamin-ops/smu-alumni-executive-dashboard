@@ -1,253 +1,243 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 
-# ---------------------------------------------------
+# --------------------------------------------------
+
 # PAGE CONFIG
-# ---------------------------------------------------
+
+# --------------------------------------------------
 
 st.set_page_config(
-    page_title="SMU Alumni Executive Dashboard",
-    layout="wide"
+page_title="SMU Alumni Executive Dashboard",
+layout="wide"
 )
 
-# ---------------------------------------------------
+# --------------------------------------------------
+
+# SMU COLOURS
+
+# --------------------------------------------------
+
+SMU_BLUE = "#214A9A"
+SMU_ORANGE = "#F37021"
+
+# --------------------------------------------------
+
 # LOAD DATA
-# ---------------------------------------------------
+
+# --------------------------------------------------
 
 @st.cache_data
 def load_data():
-    return pd.read_excel(
-        "SMU_Alumni_Short_Survey_ANALYTICS_READY.xlsx"
-    )
+return pd.read_excel(
+"SMU_Alumni_Short_Survey_ANALYTICS_READY.xlsx"
+)
 
 df = load_data()
 
-# ---------------------------------------------------
+# --------------------------------------------------
+
 # RENAME COLUMNS
-# ---------------------------------------------------
+
+# --------------------------------------------------
 
 df.columns = [
-    'ID',
-    'Ethnicity',
-    'Gender',
-    'School',
-    'Qualification_Group',
-    'Qualification',
-    'Graduation_Year',
-    'Employment_Status',
-    'Employment_Sector',
-    'Time_To_Employment',
-    'Qualification_Relevance',
-    'Workplace_Preparedness',
-    'Alumni_Engagement_Interest',
-    'Stay_Connected'
+"ID",
+"Ethnicity",
+"Gender",
+"School",
+"Qualification_Group",
+"Qualification",
+"Graduation_Year",
+"Employment_Status",
+"Employment_Sector",
+"Time_To_Employment",
+"Qualification_Relevance",
+"Workplace_Preparedness",
+"Alumni_Engagement_Interest",
+"Stay_Connected"
 ]
 
-# ---------------------------------------------------
-# KPI CALCULATIONS
-# ---------------------------------------------------
+# --------------------------------------------------
 
-responses = len(df)
+# SIDEBAR FILTERS
 
-employment_rate = round(
-    (df["Employment_Status"]
-     .str.contains("Employed", case=False, na=False)
-    ).mean() * 100,
-    1
+# --------------------------------------------------
+
+st.sidebar.header("Filters")
+
+school = st.sidebar.multiselect(
+"School",
+sorted(df["School"].dropna().unique()),
+default=sorted(df["School"].dropna().unique())
 )
 
-# ---------------------------------------------------
-# ADD TABS HERE
-# ---------------------------------------------------
+gender = st.sidebar.multiselect(
+"Gender",
+sorted(df["Gender"].dropna().unique()),
+default=sorted(df["Gender"].dropna().unique())
+)
+
+ethnicity = st.sidebar.multiselect(
+"Ethnicity",
+sorted(df["Ethnicity"].dropna().unique()),
+default=sorted(df["Ethnicity"].dropna().unique())
+)
+
+filtered = df[
+(df["School"].isin(school))
+&
+(df["Gender"].isin(gender))
+&
+(df["Ethnicity"].isin(ethnicity))
+]
+
+# --------------------------------------------------
+
+# KPIs
+
+# --------------------------------------------------
+
+responses = len(filtered)
+
+employment_rate = round(
+(
+filtered["Employment_Status"]
+.astype(str)
+.str.contains("Employed", case=False, na=False)
+).mean() * 100,
+1
+)
+
+# --------------------------------------------------
+
+# TITLE
+
+# --------------------------------------------------
+
+st.title("🎓 SMU Alumni Graduate Outcomes Dashboard")
+
+# --------------------------------------------------
+
+# TABS
+
+# --------------------------------------------------
 
 tab1, tab2, tab3, tab4 = st.tabs([
-    "Executive Overview",
-    "Graduate Profile",
-    "Employability",
-    "Graduate Outcomes"
+"Executive Overview",
+"Graduate Profile",
+"Employability",
+"Graduate Outcomes"
 ])
 
-# ---------------------------------------------------
+# --------------------------------------------------
+
 # TAB 1
-# ---------------------------------------------------
+
+# --------------------------------------------------
 
 with tab1:
 
-    st.header("Executive Overview")
+```
+col1, col2 = st.columns(2)
 
-    col1, col2 = st.columns(2)
+col1.metric("Responses", f"{responses:,}")
+col2.metric("Employment Rate", f"{employment_rate}%")
 
-    col1.metric("Responses", responses)
-    col2.metric("Employment Rate", f"{employment_rate}%")
+st.info(
+    f"""
+    A total of {responses:,} alumni responses are included in the analysis.
+    The current employment rate is {employment_rate}%.
+    """
+)
+```
 
-# ---------------------------------------------------
+# --------------------------------------------------
+
 # TAB 2
-# ---------------------------------------------------
+
+# --------------------------------------------------
 
 with tab2:
 
-    st.header("Graduate Profile")
+```
+st.header("Graduate Profile")
 
-    st.write("Graduate profile charts will go here.")
+school_df = (
+    filtered["School"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
 
-# ---------------------------------------------------
+school_df.columns = ["School", "Percentage"]
+
+fig_school = px.bar(
+    school_df,
+    x="Percentage",
+    y="School",
+    orientation="h",
+    text="Percentage",
+    color_discrete_sequence=[SMU_BLUE]
+)
+
+fig_school.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="inside"
+)
+
+st.plotly_chart(
+    fig_school,
+    width="stretch",
+    key="school_chart"
+)
+```
+
+# --------------------------------------------------
+
 # TAB 3
-# ---------------------------------------------------
+
+# --------------------------------------------------
 
 with tab3:
 
-    st.header("Employability")
+```
+st.header("Employability")
 
-    st.write("Employability charts will go here.")
+emp_df = (
+    filtered["Employment_Status"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
 
-# ---------------------------------------------------
+emp_df.columns = ["Status", "Percentage"]
+
+fig_emp = px.pie(
+    emp_df,
+    names="Status",
+    values="Percentage",
+    hole=0.5
+)
+
+st.plotly_chart(
+    fig_emp,
+    width="stretch",
+    key="employment_chart"
+)
+```
+
+# --------------------------------------------------
+
 # TAB 4
-# ---------------------------------------------------
+
+# --------------------------------------------------
 
 with tab4:
 
-    st.header("Graduate Outcomes")
+```
+st.header("Graduate Outcomes")
 
-    st.write("Graduate outcomes charts will go here.")
-
-with tab2:
-
-    st.header("Graduate Profile")
-
-    col1, col2 = st.columns(2)
-
-    # SCHOOL DISTRIBUTION
-    school_df = (
-        filtered["School"]
-        .value_counts(normalize=True)
-        .mul(100)
-        .reset_index()
-    )
-
-    school_df.columns = ["School", "Percentage"]
-
-    fig_school = px.bar(
-        school_df,
-        x="Percentage",
-        y="School",
-        orientation="h",
-        text="Percentage",
-        color_discrete_sequence=[SMU_BLUE]
-    )
-
-    fig_school.update_traces(
-        texttemplate="%{text:.1f}%",
-        textposition="inside"
-    )
-
-    with col1:
-        st.subheader("School Distribution")
-        st.plotly_chart(fig_school, use_container_width=True)
-
-    # GENDER DISTRIBUTION
-    gender_df = (
-        filtered["Gender"]
-        .value_counts(normalize=True)
-        .mul(100)
-        .reset_index()
-    )
-
-    gender_df.columns = ["Gender", "Percentage"]
-
-    fig_gender = px.pie(
-        gender_df,
-        names="Gender",
-        values="Percentage",
-        hole=0.5,
-        color_discrete_sequence=[SMU_ORANGE, SMU_BLUE]
-    )
-
-    fig_gender.update_traces(
-        textposition="inside",
-        textinfo="percent+label"
-    )
-
-    with col2:
-        st.subheader("Gender Distribution")
-        st.plotly_chart(fig_gender, use_container_width=True)
-    st.subheader("Ethnicity Distribution")
-
-    eth_df = (
-        filtered["Ethnicity"]
-        .value_counts(normalize=True)
-        .mul(100)
-        .reset_index()
-    )
-
-    eth_df.columns = ["Ethnicity", "Percentage"]
-
-    fig_eth = px.bar(
-        eth_df,
-        x="Ethnicity",
-        y="Percentage",
-        text="Percentage",
-        color_discrete_sequence=[SMU_ORANGE]
-    )
-
-    fig_eth.update_traces(
-        texttemplate="%{text:.1f}%",
-        textposition="inside"
-    )
-
-    st.plotly_chart(fig_eth, use_container_width=True)
-        st.subheader("Qualification Group")
-
-    qg_df = (
-        filtered["Qualification_Group"]
-        .value_counts(normalize=True)
-        .mul(100)
-        .reset_index()
-    )
-
-    qg_df.columns = [
-        "Qualification_Group",
-        "Percentage"
-    ]
-
-    fig_qg = px.bar(
-        qg_df,
-        x="Qualification_Group",
-        y="Percentage",
-        text="Percentage",
-        color_discrete_sequence=[SMU_BLUE]
-    )
-
-    fig_qg.update_traces(
-        texttemplate="%{text:.1f}%",
-        textposition="inside"
-    )
-
-    st.plotly_chart(fig_qg, use_container_width=True)
-    st.subheader("Top Qualifications")
-
-    qual_df = (
-        filtered["Qualification"]
-        .value_counts()
-        .head(15)
-        .reset_index()
-    )
-
-    qual_df.columns = [
-        "Qualification",
-        "Responses"
-    ]
-
-    fig_qual = px.bar(
-        qual_df,
-        x="Responses",
-        y="Qualification",
-        orientation="h",
-        color_discrete_sequence=[SMU_ORANGE]
-    )
-
-    st.plotly_chart(
-        fig_qual,
-        use_container_width=True
-    )
+st.write("Graduate outcomes visuals coming next.")
+```
