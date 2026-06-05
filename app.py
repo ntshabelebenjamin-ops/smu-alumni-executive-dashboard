@@ -390,7 +390,6 @@ sector_df = pd.DataFrame({
     ).round(1)
 })
 
-sector_df.columns = ["Sector", "Responses"]
 
 fig_sector = px.bar(
     sector_df,
