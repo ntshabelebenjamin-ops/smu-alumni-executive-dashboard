@@ -446,7 +446,7 @@ st.plotly_chart(
 
 # Qualification Relevance
 
-st.subheader("Qualification Relevance")
+st.subheader("Extent to which SMU Qualification Supports Current Employment")
 
 rel_df = (
     filtered["Qualification_Relevance"]
