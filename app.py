@@ -8,3 +8,13 @@ def load_data():
     )
 
 df = load_data()
+st.title("SMU Alumni Executive Dashboard")
+
+st.success("Data loaded successfully")
+
+st.write("Number of Responses:", len(df))
+
+st.write("Columns:")
+st.write(df.columns.tolist())
+
+st.dataframe(df.head())
