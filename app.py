@@ -13,6 +13,14 @@ page_title="SMU Alumni Executive Dashboard",
 layout="wide"
 )
 
+
+st.markdown(
+    """
+    **Prepared by:** Benjamin Ntshabele  
+    **Position:** Institutional Researcher  
+    **Department:** Academic Planning and Quality Assurance
+    """
+)
 # ==================================================
 
 # SMU COLOURS
