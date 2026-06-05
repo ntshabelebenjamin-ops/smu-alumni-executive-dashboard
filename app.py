@@ -268,7 +268,7 @@ st.plotly_chart(
     width="stretch",
     key="school_chart"
 )
-```
+
 
 # --------------------------------------------------
 
@@ -278,8 +278,8 @@ st.plotly_chart(
 
 with tab3:
 
-```
-st.header("Employability")
+
+ st.header("Employability")
 
 emp_df = (
     filtered["Employment_Status"]
@@ -302,7 +302,7 @@ st.plotly_chart(
     width="stretch",
     key="employment_chart"
 )
-```
+
 
 # --------------------------------------------------
 
@@ -311,9 +311,7 @@ st.plotly_chart(
 # --------------------------------------------------
 
 with tab4:
-
-```
-st.header("Graduate Outcomes")
+ st.header("Graduate Outcomes")
 
 st.write("Graduate outcomes visuals coming next.")
-```
+
