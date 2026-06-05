@@ -14,7 +14,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🎓 SMU Alumni Graduate Outcomes Dashboard")
+
 
 st.caption(
     "Prepared by Benjamin Ntshabele | Institutional Researcher | Academic Planning and Quality Assurance Department"
