@@ -389,7 +389,7 @@ st.plotly_chart(
 with tab4:
 
 
-st.header("Graduate Outcomes")
+    st.header("Graduate Outcomes")
 
-st.write("Graduate outcomes visuals coming next.")
+    st.write("Graduate outcomes visuals coming next.")
 
