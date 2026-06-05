@@ -104,6 +104,12 @@ qualification = st.sidebar.multiselect(
 )
 
 
+graduation_year = st.sidebar.multiselect(
+    "Graduation Year",
+    options=sorted(df["Graduation_Year"].dropna().unique()),
+    default=sorted(df["Graduation_Year"].dropna().unique()),
+    key="graduation_year_filter"
+)
 
 graduation_year = st.sidebar.multiselect(
     "Graduation Year",
@@ -111,6 +117,8 @@ graduation_year = st.sidebar.multiselect(
     default=sorted(df["Graduation_Year"].dropna().unique()),
     key="graduation_year_filter"
 )
+
+
 filtered = df[
     (df["School"].isin(school))
     &
@@ -121,6 +129,8 @@ filtered = df[
     (df["Qualification_Group"].isin(qualification_group))
     &
     (df["Qualification"].isin(qualification))
+    &
+    (df["Graduation_Year"].isin(graduation_year))
 ]
 
 # ==================================================
