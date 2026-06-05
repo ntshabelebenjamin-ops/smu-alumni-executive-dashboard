@@ -1,5 +1,10 @@
-import pandas as pd
 import streamlit as st
+import pandas as pd
+
+st.set_page_config(
+    page_title="SMU Alumni Executive Dashboard",
+    layout="wide"
+)
 
 @st.cache_data
 def load_data():
@@ -8,17 +13,7 @@ def load_data():
     )
 
 df = load_data()
-st.title("SMU Alumni Executive Dashboard")
 
-st.success("Data loaded successfully")
-
-st.write("Number of Responses:", len(df))
-
-st.write("Columns:")
-st.write(df.columns.tolist())
-
-st.dataframe(df.head())
-df.columns.tolist()
 df.columns = [
     'ID',
     'Ethnicity',
@@ -35,25 +30,17 @@ df.columns = [
     'Alumni_Engagement_Interest',
     'Stay_Connected'
 ]
+
+st.title("SMU Alumni Executive Dashboard")
+
+st.subheader("Dataset Overview")
+
+st.write(f"Number of Responses: {df.shape[0]:,}")
+st.write(f"Number of Variables: {df.shape[1]}")
+
 st.write(df.columns.tolist())
-responses = len(df)
 
-employment_rate = round(
-    (
-        df["Employment_Status"]
-        .str.contains("Employed", case=False, na=False)
-    ).mean() * 100,
-    1
-)
-
-col1, col2 = st.columns(2)
-
-col1.metric(
-    "Responses",
-    f"{responses:,}"
-)
-
-col2.metric(
-    "Employment Rate",
-    f"{employment_rate}%"
+st.dataframe(
+    df,
+    use_container_width=True
 )
