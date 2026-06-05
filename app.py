@@ -35,3 +35,4 @@ df.columns = [
     'Alumni_Engagement_Interest',
     'Stay_Connected'
 ]
+st.write(df.columns.tolist())
