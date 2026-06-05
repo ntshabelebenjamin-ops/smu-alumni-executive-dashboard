@@ -279,11 +279,6 @@ fig_qg = px.bar(
     color_discrete_sequence=[SMU_BLUE]
 )
 
-fig_qg.update_traces(
-    texttemplate="%{text:.1f}%",
-    textposition="outside"
-)
-
 st.plotly_chart(
     fig_qg,
     width="stretch",
@@ -343,8 +338,6 @@ st.plotly_chart(
     key="graduation_year_chart"
 )
 
-
-
 # ==================================================
 
 # TAB 3 - EMPLOYABILITY
@@ -378,6 +371,7 @@ st.plotly_chart(
     width="stretch",
     key="employment_chart"
 )
+
 
 
 # ==================================================
