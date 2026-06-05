@@ -145,12 +145,10 @@ tab1, tab2, tab3, tab4 = st.tabs([
 # ==================================================
 
 with tab1:
+   col1, col2 = st.columns(2)
 
-```
-col1, col2 = st.columns(2)
-
-col1.metric("Responses", f"{responses:,}")
-col2.metric("Employment Rate", f"{employment_rate}%")
+   col1.metric("Responses", f"{responses:,}")
+   col2.metric("Employment Rate", f"{employment_rate}%")
 
 st.info(
     f"""
@@ -159,7 +157,7 @@ st.info(
     Current employment rate: {employment_rate}%
     """
 )
-```
+
 
 # ==================================================
 
@@ -169,8 +167,7 @@ st.info(
 
 with tab2:
 
-```
-st.header("Graduate Profile")
+   st.header("Graduate Profile")
 
 school_df = (
     filtered["School"]
@@ -200,7 +197,7 @@ st.plotly_chart(
     width="stretch",
     key="school_chart"
 )
-```
+
 
 # ==================================================
 
@@ -209,9 +206,7 @@ st.plotly_chart(
 # ==================================================
 
 with tab3:
-
-```
-st.header("Employability")
+  st.header("Employability")
 
 emp_df = (
     filtered["Employment_Status"]
@@ -235,7 +230,6 @@ st.plotly_chart(
     width="stretch",
     key="employment_chart"
 )
-```
 
 # ==================================================
 
@@ -245,8 +239,7 @@ st.plotly_chart(
 
 with tab4:
 
-```
-st.header("Graduate Outcomes")
+   st.header("Graduate Outcomes")
 
 st.write("Graduate outcomes visuals coming next.")
-```
+
