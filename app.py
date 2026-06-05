@@ -172,3 +172,82 @@ with tab2:
     with col2:
         st.subheader("Gender Distribution")
         st.plotly_chart(fig_gender, use_container_width=True)
+    st.subheader("Ethnicity Distribution")
+
+    eth_df = (
+        filtered["Ethnicity"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
+
+    eth_df.columns = ["Ethnicity", "Percentage"]
+
+    fig_eth = px.bar(
+        eth_df,
+        x="Ethnicity",
+        y="Percentage",
+        text="Percentage",
+        color_discrete_sequence=[SMU_ORANGE]
+    )
+
+    fig_eth.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="inside"
+    )
+
+    st.plotly_chart(fig_eth, use_container_width=True)
+        st.subheader("Qualification Group")
+
+    qg_df = (
+        filtered["Qualification_Group"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
+
+    qg_df.columns = [
+        "Qualification_Group",
+        "Percentage"
+    ]
+
+    fig_qg = px.bar(
+        qg_df,
+        x="Qualification_Group",
+        y="Percentage",
+        text="Percentage",
+        color_discrete_sequence=[SMU_BLUE]
+    )
+
+    fig_qg.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="inside"
+    )
+
+    st.plotly_chart(fig_qg, use_container_width=True)
+    st.subheader("Top Qualifications")
+
+    qual_df = (
+        filtered["Qualification"]
+        .value_counts()
+        .head(15)
+        .reset_index()
+    )
+
+    qual_df.columns = [
+        "Qualification",
+        "Responses"
+    ]
+
+    fig_qual = px.bar(
+        qual_df,
+        x="Responses",
+        y="Qualification",
+        orientation="h",
+        color_discrete_sequence=[SMU_ORANGE]
+    )
+
+    st.plotly_chart(
+        fig_qual,
+        use_container_width=True
+    )
