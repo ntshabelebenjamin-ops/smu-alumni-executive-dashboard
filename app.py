@@ -468,16 +468,96 @@ st.plotly_chart(
 
 
 
-# ==================================================
-
-# TAB 4 - GRADUATE OUTCOMES
-
-# ==================================================
-
 with tab4:
 
 
     st.header("Graduate Outcomes")
 
-    st.write("Graduate outcomes visuals coming next.")
+# Workplace Preparedness
+
+st.subheader("Workplace Preparedness")
+
+prep_df = (
+    filtered["Workplace_Preparedness"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+prep_df.columns = ["Response", "Percentage"]
+
+fig_prep = px.pie(
+    prep_df,
+    names="Response",
+    values="Percentage",
+    hole=0.5,
+    color_discrete_sequence=[SMU_BLUE, SMU_ORANGE]
+)
+
+st.plotly_chart(
+    fig_prep,
+    width="stretch",
+    key="preparedness_chart"
+)
+
+# Alumni Engagement Interest
+
+st.subheader("Alumni Engagement Interest")
+
+engage_df = (
+    filtered["Alumni_Engagement_Interest"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+engage_df.columns = ["Response", "Percentage"]
+
+fig_engage = px.bar(
+    engage_df,
+    x="Response",
+    y="Percentage",
+    text="Percentage",
+    color_discrete_sequence=[SMU_ORANGE]
+)
+
+fig_engage.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="outside"
+)
+
+st.plotly_chart(
+    fig_engage,
+    width="stretch",
+    key="engagement_chart"
+)
+
+# Stay Connected
+
+st.subheader("Stay Connected with SMU")
+
+connect_df = (
+    filtered["Stay_Connected"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+connect_df.columns = ["Response", "Percentage"]
+
+fig_connect = px.pie(
+    connect_df,
+    names="Response",
+    values="Percentage",
+    hole=0.5,
+    color_discrete_sequence=[SMU_BLUE, SMU_ORANGE]
+)
+
+st.plotly_chart(
+    fig_connect,
+    width="stretch",
+    key="connect_chart"
+)
+
+
 
