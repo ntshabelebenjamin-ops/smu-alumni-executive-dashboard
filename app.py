@@ -87,6 +87,14 @@ default=sorted(df["Ethnicity"].dropna().unique()),
 key="ethnicity_filter"
 )
 
+
+qualification_group = st.sidebar.multiselect(
+    "Qualification Group",
+    options=sorted(df["Qualification_Group"].dropna().unique()),
+    default=sorted(df["Qualification_Group"].dropna().unique()),
+    key="qualification_group_filter"
+)
+
 # ==================================================
 
 # FILTERED DATA
