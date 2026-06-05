@@ -22,17 +22,16 @@ layout="wide"
 SMU_BLUE = "#214A9A"
 SMU_ORANGE = "#F37021"
 
+
 # ==================================================
-
 # LOAD DATA
-
 # ==================================================
 
 @st.cache_data
 def load_data():
-return pd.read_excel(
-"SMU_Alumni_Short_Survey_ANALYTICS_READY.xlsx"
-)
+    return pd.read_excel(
+        "SMU_Alumni_Short_Survey_ANALYTICS_READY.xlsx"
+    )
 
 df = load_data()
 
