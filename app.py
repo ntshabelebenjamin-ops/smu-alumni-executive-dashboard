@@ -171,7 +171,7 @@ with tab1:
 with tab2:
 
 
-st.header("Graduate Profile")
+    st.header("Graduate Profile")
 
 # School Distribution
 
@@ -354,7 +354,7 @@ st.plotly_chart(
 with tab3:
 
 
-st.header("Employability")
+    st.header("Employability")
 
 emp_df = (
     filtered["Employment_Status"]
