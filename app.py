@@ -177,8 +177,6 @@ tab1, tab2, tab3, tab4 = st.tabs([
 # --------------------------------------------------
 
 with tab1:
-
-```
 col1, col2 = st.columns(2)
 
 col1.metric("Responses", f"{responses:,}")
@@ -190,7 +188,7 @@ st.info(
     The current employment rate is {employment_rate}%.
     """
 )
-```
+
 
 # --------------------------------------------------
 
