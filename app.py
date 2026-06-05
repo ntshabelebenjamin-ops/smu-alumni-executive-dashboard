@@ -104,6 +104,13 @@ qualification = st.sidebar.multiselect(
 )
 
 
+
+graduation_year = st.sidebar.multiselect(
+    "Graduation Year",
+    options=sorted(df["Graduation_Year"].dropna().unique()),
+    default=sorted(df["Graduation_Year"].dropna().unique()),
+    key="graduation_year_filter"
+)
 filtered = df[
     (df["School"].isin(school))
     &
@@ -297,59 +304,7 @@ st.plotly_chart(
     key="ethnicity_chart"
 )
 
-# Qualification Group Distribution
 
-st.subheader("Qualification Group Distribution")
-
-qg_df = (
-    filtered["Qualification_Group"]
-    .value_counts(normalize=True)
-    .mul(100)
-    .reset_index()
-)
-
-qg_df.columns = ["Qualification_Group", "Percentage"]
-
-fig_qg = px.bar(
-    qg_df,
-    x="Qualification_Group",
-    y="Percentage",
-    text="Percentage",
-    color_discrete_sequence=[SMU_BLUE]
-)
-
-st.plotly_chart(
-    fig_qg,
-    width="stretch",
-    key="qualification_group_chart"
-)
-
-# Top Qualifications
-
-st.subheader("Top Qualifications")
-
-qual_df = (
-    filtered["Qualification"]
-    .value_counts()
-    .head(15)
-    .reset_index()
-)
-
-qual_df.columns = ["Qualification", "Responses"]
-
-fig_qual = px.bar(
-    qual_df,
-    x="Responses",
-    y="Qualification",
-    orientation="h",
-    color_discrete_sequence=[SMU_ORANGE]
-)
-
-st.plotly_chart(
-    fig_qual,
-    width="stretch",
-    key="qualification_chart"
-)
 
 # Graduation Year Distribution
 
