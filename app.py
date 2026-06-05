@@ -344,10 +344,18 @@ st.plotly_chart(
 
 # ==================================================
 
+# ==================================================
+
+# TAB 3 - EMPLOYABILITY
+
+# ==================================================
+
 with tab3:
 
 
     st.header("Employability")
+
+# Employment Status
 
 emp_df = (
     filtered["Employment_Status"]
@@ -371,95 +379,94 @@ st.plotly_chart(
     width="stretch",
     key="employment_chart"
 )
-    # ==================================================
-    # EMPLOYMENT SECTOR
-    # ==================================================
 
-    st.subheader("Employment Sector")
+# Employment Sector
 
-    sector_df = (
-        filtered["Employment_Sector"]
-        .value_counts()
-        .reset_index()
-    )
+st.subheader("Employment Sector")
 
-    sector_df.columns = ["Sector", "Responses"]
+sector_df = (
+    filtered["Employment_Sector"]
+    .value_counts()
+    .reset_index()
+)
 
-    fig_sector = px.bar(
-        sector_df,
-        x="Responses",
-        y="Sector",
-        orientation="h",
-        text="Responses",
-        color_discrete_sequence=[SMU_ORANGE]
-    )
+sector_df.columns = ["Sector", "Responses"]
 
-    st.plotly_chart(
-        fig_sector,
-        width="stretch",
-        key="sector_chart"
-    )
-    # ==================================================
-    # TIME TO EMPLOYMENT
-    # ==================================================
+fig_sector = px.bar(
+    sector_df,
+    x="Responses",
+    y="Sector",
+    orientation="h",
+    text="Responses",
+    color_discrete_sequence=[SMU_ORANGE]
+)
 
-    st.subheader("Time to Employment")
+st.plotly_chart(
+    fig_sector,
+    width="stretch",
+    key="sector_chart"
+)
 
-    time_df = (
-        filtered["Time_To_Employment"]
-        .value_counts(normalize=True)
-        .mul(100)
-        .reset_index()
-    )
+# Time to Employment
 
-    time_df.columns = ["Time", "Percentage"]
+st.subheader("Time to Employment")
 
-    fig_time = px.bar(
-        time_df,
-        x="Time",
-        y="Percentage",
-        text="Percentage",
-        color_discrete_sequence=[SMU_BLUE]
-    )
+time_df = (
+    filtered["Time_To_Employment"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
 
-    fig_time.update_traces(
-        texttemplate="%{text:.1f}%",
-        textposition="outside"
-    )
+time_df.columns = ["Time", "Percentage"]
 
-    st.plotly_chart(
-        fig_time,
-        width="stretch",
-        key="time_chart"
-    )
-    # ==================================================
-    # QUALIFICATION RELEVANCE
-    # ==================================================
+fig_time = px.bar(
+    time_df,
+    x="Time",
+    y="Percentage",
+    text="Percentage",
+    color_discrete_sequence=[SMU_BLUE]
+)
 
-    st.subheader("Qualification Relevance")
+fig_time.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="outside"
+)
 
-    rel_df = (
-        filtered["Qualification_Relevance"]
-        .value_counts(normalize=True)
-        .mul(100)
-        .reset_index()
-    )
+st.plotly_chart(
+    fig_time,
+    width="stretch",
+    key="time_chart"
+)
 
-    rel_df.columns = ["Response", "Percentage"]
+# Qualification Relevance
 
-    fig_rel = px.pie(
-        rel_df,
-        names="Response",
-        values="Percentage",
-        hole=0.5,
-        color_discrete_sequence=[SMU_BLUE, SMU_ORANGE]
-    )
+st.subheader("Qualification Relevance")
 
-    st.plotly_chart(
-        fig_rel,
-        width="stretch",
-        key="relevance_chart"
-    )
+rel_df = (
+    filtered["Qualification_Relevance"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+rel_df.columns = ["Response", "Percentage"]
+
+fig_rel = px.pie(
+    rel_df,
+    names="Response",
+    values="Percentage",
+    hole=0.5,
+    color_discrete_sequence=[SMU_BLUE, SMU_ORANGE]
+)
+
+st.plotly_chart(
+    fig_rel,
+    width="stretch",
+    key="relevance_chart"
+)
+
+
 
 # ==================================================
 
