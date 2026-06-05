@@ -197,6 +197,59 @@ st.plotly_chart(
     width="stretch",
     key="school_chart"
 )
+    st.subheader("Gender Distribution")
+
+    gender_df = (
+        filtered["Gender"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
+
+    gender_df.columns = ["Gender", "Percentage"]
+
+    fig_gender = px.pie(
+        gender_df,
+        names="Gender",
+        values="Percentage",
+        hole=0.5,
+        color_discrete_sequence=[SMU_ORANGE, SMU_BLUE]
+    )
+
+    fig_gender.update_traces(
+        textposition="inside",
+        textinfo="percent+label"
+    )
+
+    st.plotly_chart(
+        fig_gender,
+        width="stretch",
+        key="gender_chart"
+    )
+    st.subheader("Ethnicity Distribution")
+
+    eth_df = (
+        filtered["Ethnicity"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
+
+    eth_df.columns = ["Ethnicity", "Percentage"]
+
+    fig_eth = px.bar(
+        eth_df,
+        x="Ethnicity",
+        y="Percentage",
+        text="Percentage",
+        color_discrete_sequence=[SMU_ORANGE]
+    )
+
+    st.plotly_chart(
+        fig_eth,
+        width="stretch",
+        key="ethnicity_chart"
+    )
 
 
 # ==================================================
