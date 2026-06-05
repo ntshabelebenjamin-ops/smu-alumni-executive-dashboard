@@ -259,6 +259,92 @@ st.plotly_chart(
     key="ethnicity_chart"
 )
 
+# Qualification Group Distribution
+
+st.subheader("Qualification Group Distribution")
+
+qg_df = (
+    filtered["Qualification_Group"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+qg_df.columns = ["Qualification_Group", "Percentage"]
+
+fig_qg = px.bar(
+    qg_df,
+    x="Qualification_Group",
+    y="Percentage",
+    text="Percentage",
+    color_discrete_sequence=[SMU_BLUE]
+)
+
+fig_qg.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="outside"
+)
+
+st.plotly_chart(
+    fig_qg,
+    width="stretch",
+    key="qualification_group_chart"
+)
+
+# Top Qualifications
+
+st.subheader("Top Qualifications")
+
+qual_df = (
+    filtered["Qualification"]
+    .value_counts()
+    .head(15)
+    .reset_index()
+)
+
+qual_df.columns = ["Qualification", "Responses"]
+
+fig_qual = px.bar(
+    qual_df,
+    x="Responses",
+    y="Qualification",
+    orientation="h",
+    color_discrete_sequence=[SMU_ORANGE]
+)
+
+st.plotly_chart(
+    fig_qual,
+    width="stretch",
+    key="qualification_chart"
+)
+
+# Graduation Year Distribution
+
+st.subheader("Graduation Year Distribution")
+
+year_df = (
+    filtered["Graduation_Year"]
+    .value_counts()
+    .sort_index()
+    .reset_index()
+)
+
+year_df.columns = ["Graduation_Year", "Responses"]
+
+fig_year = px.line(
+    year_df,
+    x="Graduation_Year",
+    y="Responses",
+    markers=True
+)
+
+st.plotly_chart(
+    fig_year,
+    width="stretch",
+    key="graduation_year_chart"
+)
+
+
 
 # ==================================================
 
