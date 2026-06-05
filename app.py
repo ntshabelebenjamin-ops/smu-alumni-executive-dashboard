@@ -293,6 +293,12 @@ fig_eth = px.bar(
     color_discrete_sequence=[SMU_ORANGE]
 )
 
+
+fig_eth.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="outside"
+)
+
 st.plotly_chart(
     fig_eth,
     width="stretch",
