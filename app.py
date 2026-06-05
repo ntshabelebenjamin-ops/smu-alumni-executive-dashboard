@@ -142,7 +142,6 @@ filtered["Employment_Status"]
 
 # ==================================================
 
-st.title("🎓 SMU Alumni Graduate Outcomes Dashboard")
 
 # ==================================================
 
