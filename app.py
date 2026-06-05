@@ -381,13 +381,13 @@ st.subheader("Employment Sector")
 
 sector_counts = filtered["Employment_Sector"].value_counts()
 
+
 sector_df = pd.DataFrame({
     "Sector": sector_counts.index,
     "Count": sector_counts.values,
-    "Percentage": round(
-        sector_counts.values / sector_counts.sum() * 100,
-        1
-    )
+    "Percentage": (
+        sector_counts.values / sector_counts.sum() * 100
+    ).round(1)
 })
 
 sector_df.columns = ["Sector", "Responses"]
