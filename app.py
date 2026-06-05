@@ -111,13 +111,6 @@ graduation_year = st.sidebar.multiselect(
     key="graduation_year_filter"
 )
 
-graduation_year = st.sidebar.multiselect(
-    "Graduation Year",
-    options=sorted(df["Graduation_Year"].dropna().unique()),
-    default=sorted(df["Graduation_Year"].dropna().unique()),
-    key="graduation_year_filter"
-)
-
 
 filtered = df[
     (df["School"].isin(school))
