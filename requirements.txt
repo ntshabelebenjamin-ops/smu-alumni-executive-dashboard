@@ -1,1 +1,29 @@
 
+streamlit>=1.45.0
+pandas>=2.2.0
+numpy>=1.26.0
+plotly>=6.0.0
+openpyxl>=3.1.2
+xlsxwriter>=3.2.0
+
+# Visual enhancements
+streamlit-option-menu>=0.4.0
+streamlit-aggrid>=1.0.5
+streamlit-extras>=0.6.0
+
+# Analytics
+scipy>=1.14.0
+scikit-learn>=1.6.0
+
+# Text analytics (for alumni comments)
+wordcloud>=1.9.4
+nltk>=3.9.0
+
+# Image handling
+Pillow>=11.0.0
+
+# PDF exports (future enhancement)
+reportlab>=4.2.0
+
+# GitHub deployment compatibility
+watchdog>=6.0.0
