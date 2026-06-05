@@ -95,18 +95,25 @@ qualification_group = st.sidebar.multiselect(
     key="qualification_group_filter"
 )
 
-# ==================================================
 
-# FILTERED DATA
+qualification = st.sidebar.multiselect(
+    "Qualification",
+    options=sorted(df["Qualification"].dropna().unique()),
+    default=sorted(df["Qualification"].dropna().unique()),
+    key="qualification_filter"
+)
 
-# ==================================================
 
 filtered = df[
-(df["School"].isin(school))
-&
-(df["Gender"].isin(gender))
-&
-(df["Ethnicity"].isin(ethnicity))
+    (df["School"].isin(school))
+    &
+    (df["Gender"].isin(gender))
+    &
+    (df["Ethnicity"].isin(ethnicity))
+    &
+    (df["Qualification_Group"].isin(qualification_group))
+    &
+    (df["Qualification"].isin(qualification))
 ]
 
 # ==================================================
