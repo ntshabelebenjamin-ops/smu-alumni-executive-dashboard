@@ -18,5 +18,4 @@ st.write("Columns:")
 st.write(df.columns.tolist())
 
 st.dataframe(df.head())
-streamlit run app.py
 df.columns.tolist()
