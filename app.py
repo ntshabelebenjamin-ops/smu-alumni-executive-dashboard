@@ -36,3 +36,24 @@ df.columns = [
     'Stay_Connected'
 ]
 st.write(df.columns.tolist())
+responses = len(df)
+
+employment_rate = round(
+    (
+        df["Employment_Status"]
+        .str.contains("Employed", case=False, na=False)
+    ).mean() * 100,
+    1
+)
+
+col1, col2 = st.columns(2)
+
+col1.metric(
+    "Responses",
+    f"{responses:,}"
+)
+
+col2.metric(
+    "Employment Rate",
+    f"{employment_rate}%"
+)
