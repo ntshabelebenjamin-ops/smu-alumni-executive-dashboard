@@ -100,70 +100,11 @@ filtered = df[
 
 # --------------------------------------------------
 
-# SIDEBAR FILTERS
-
-# --------------------------------------------------
-
-st.sidebar.header("Filters")
-
-school = st.sidebar.multiselect(
-"School",
-sorted(df["School"].dropna().unique()),
-default=sorted(df["School"].dropna().unique())
-)
-
-gender = st.sidebar.multiselect(
-"Gender",
-sorted(df["Gender"].dropna().unique()),
-default=sorted(df["Gender"].dropna().unique())
-)
-
-ethnicity = st.sidebar.multiselect(
-"Ethnicity",
-sorted(df["Ethnicity"].dropna().unique()),
-default=sorted(df["Ethnicity"].dropna().unique())
-)
-
-filtered = df[
-(df["School"].isin(school))
-&
-(df["Gender"].isin(gender))
-&
-(df["Ethnicity"].isin(ethnicity))
-]
-
-# --------------------------------------------------
-
 # KPIs
 
 # --------------------------------------------------
 
 responses = len(filtered)
-# --------------------------------------------------
-
-# FILTERS
-
-# --------------------------------------------------
-
-st.sidebar.header("Filters")
-
-school = st.sidebar.multiselect(
-"School",
-options=sorted(df["School"].dropna().unique()),
-default=sorted(df["School"].dropna().unique())
-)
-
-gender = st.sidebar.multiselect(
-"Gender",
-options=sorted(df["Gender"].dropna().unique()),
-default=sorted(df["Gender"].dropna().unique())
-)
-
-ethnicity = st.sidebar.multiselect(
-"Ethnicity",
-options=sorted(df["Ethnicity"].dropna().unique()),
-default=sorted(df["Ethnicity"].dropna().unique())
-)
 
 # --------------------------------------------------
 
@@ -217,17 +158,18 @@ tab1, tab2, tab3, tab4 = st.tabs([
 # --------------------------------------------------
 
 with tab1:
-   col1, col2 = st.columns(2)
 
-   col1.metric("Responses", f"{responses:,}")
-   col2.metric("Employment Rate", f"{employment_rate}%")
+    col1, col2 = st.columns(2)
 
-st.info(
-    f"""
-    A total of {responses:,} alumni responses are included in the analysis.
-    The current employment rate is {employment_rate}%.
-    """
-)
+    col1.metric("Responses", f"{responses:,}")
+    col2.metric("Employment Rate", f"{employment_rate}%")
+
+    st.info(
+        f"""
+        A total of {responses:,} alumni responses are included in the analysis.
+        The current employment rate is {employment_rate}%.
+        """
+    )
 
 
 # --------------------------------------------------
@@ -237,38 +179,37 @@ st.info(
 # --------------------------------------------------
 
 with tab2:
-    
-  st.header("Graduate Profile")
 
-school_df = (
-    filtered["School"]
-    .value_counts(normalize=True)
-    .mul(100)
-    .reset_index()
-)
+    st.header("Graduate Profile")
 
-school_df.columns = ["School", "Percentage"]
+    school_df = (
+        filtered["School"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
 
-fig_school = px.bar(
-    school_df,
-    x="Percentage",
-    y="School",
-    orientation="h",
-    text="Percentage",
-    color_discrete_sequence=[SMU_BLUE]
-)
+    school_df.columns = ["School", "Percentage"]
 
-fig_school.update_traces(
-    texttemplate="%{text:.1f}%",
-    textposition="inside"
-)
+    fig_school = px.bar(
+        school_df,
+        x="Percentage",
+        y="School",
+        orientation="h",
+        text="Percentage",
+        color_discrete_sequence=[SMU_BLUE]
+    )
 
-st.plotly_chart(
-    fig_school,
-    width="stretch",
-    key="school_chart"
-)
+    fig_school.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="inside"
+    )
 
+    st.plotly_chart(
+        fig_school,
+        width="stretch",
+        key="school_chart"
+    )
 
 # --------------------------------------------------
 
@@ -278,16 +219,29 @@ st.plotly_chart(
 
 with tab3:
 
+    st.header("Employability")
 
- st.header("Employability")
+    emp_df = (
+        filtered["Employment_Status"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
 
-emp_df = (
-    filtered["Employment_Status"]
-    .value_counts(normalize=True)
-    .mul(100)
-    .reset_index()
-)
+    emp_df.columns = ["Status", "Percentage"]
 
+    fig_emp = px.pie(
+        emp_df,
+        names="Status",
+        values="Percentage",
+        hole=0.5
+    )
+
+    st.plotly_chart(
+        fig_emp,
+        width="stretch",
+        key="employment_chart"
+    )
 emp_df.columns = ["Status", "Percentage"]
 
 fig_emp = px.pie(
@@ -311,7 +265,7 @@ st.plotly_chart(
 # --------------------------------------------------
 
 with tab4:
- st.header("Graduate Outcomes")
 
-st.write("Graduate outcomes visuals coming next.")
+    st.header("Graduate Outcomes")
 
+    st.write("Graduate outcomes visuals coming next.")
