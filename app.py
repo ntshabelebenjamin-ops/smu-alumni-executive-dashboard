@@ -9,11 +9,16 @@ import plotly.express as px
 # ==================================================
 
 
-st.title("🎓 SMU Alumni Graduate Outcomes Dashboard")
+col1, col2 = st.columns([1, 6])
 
-st.caption(
-    "Prepared by Benjamin Ntshabele | Institutional Researcher | Academic Planning and Quality Assurance Department"
-)
+with col1:
+    st.image("smu_logo.png", width=120)
+
+with col2:
+    st.title("🎓 SMU Alumni Graduate Outcomes Dashboard")
+    st.caption(
+        "Prepared by Benjamin Ntshabele | Institutional Researcher | Academic Planning and Quality Assurance Department"
+    )
 # ==================================================
 
 # SMU COLOURS
