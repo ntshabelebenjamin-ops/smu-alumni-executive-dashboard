@@ -238,7 +238,7 @@ st.info(
 
 with tab2:
     
-st.header("Graduate Profile")
+  st.header("Graduate Profile")
 
 school_df = (
     filtered["School"]
