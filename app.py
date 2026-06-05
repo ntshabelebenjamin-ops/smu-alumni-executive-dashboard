@@ -394,10 +394,11 @@ sector_df.columns = ["Sector", "Responses"]
 
 fig_sector = px.bar(
     sector_df,
-    x="Responses",
+    x="Percentage",
     y="Sector",
     orientation="h",
-    text="Responses",
+    text="Percentage",
+    hover_data=["Count"],
     color_discrete_sequence=[SMU_ORANGE]
 )
 
