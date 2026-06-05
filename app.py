@@ -19,3 +19,19 @@ st.write(df.columns.tolist())
 
 st.dataframe(df.head())
 df.columns.tolist()
+df.columns = [
+    'ID',
+    'Ethnicity',
+    'Gender',
+    'School',
+    'Qualification_Group',
+    'Qualification',
+    'Graduation_Year',
+    'Employment_Status',
+    'Employment_Sector',
+    'Time_To_Employment',
+    'Qualification_Relevance',
+    'Workplace_Preparedness',
+    'Alumni_Engagement_Interest',
+    'Stay_Connected'
+]
