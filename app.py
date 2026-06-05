@@ -73,20 +73,6 @@ default=sorted(df["School"].dropna().unique()),
 key="school_filter"
 )
 
-gender = st.sidebar.multiselect(
-"Gender",
-options=sorted(df["Gender"].dropna().unique()),
-default=sorted(df["Gender"].dropna().unique()),
-key="gender_filter"
-)
-
-ethnicity = st.sidebar.multiselect(
-"Ethnicity",
-options=sorted(df["Ethnicity"].dropna().unique()),
-default=sorted(df["Ethnicity"].dropna().unique()),
-key="ethnicity_filter"
-)
-
 
 qualification = st.sidebar.multiselect(
     "Qualification",
@@ -103,17 +89,33 @@ graduation_year = st.sidebar.multiselect(
     key="graduation_year_filter"
 )
 
+gender = st.sidebar.multiselect(
+"Gender",
+options=sorted(df["Gender"].dropna().unique()),
+default=sorted(df["Gender"].dropna().unique()),
+key="gender_filter"
+)
+
+ethnicity = st.sidebar.multiselect(
+"Ethnicity",
+options=sorted(df["Ethnicity"].dropna().unique()),
+default=sorted(df["Ethnicity"].dropna().unique()),
+key="ethnicity_filter"
+)
+
 
 filtered = df[
     (df["School"].isin(school))
     &
     (df["Gender"].isin(gender))
     &
-    (df["Ethnicity"].isin(ethnicity))
-    &
     (df["Qualification"].isin(qualification))
     &
     (df["Graduation_Year"].isin(graduation_year))
+    &
+    (df["Ethnicity"].isin(ethnicity))
+
+
 ]
 
 # ==================================================
