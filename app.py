@@ -455,11 +455,11 @@ rel_df = (
     .reset_index()
 )
 
-rel_df.columns = ["Response", "Percentage"]
+rel_df.columns = ["Qualification Relevance", "Percentage"]
 
 fig_rel = px.pie(
     rel_df,
-    names="Response",
+    names="Qualification Relevance",
     values="Percentage",
     hole=0.5,
     color_discrete_sequence=[SMU_BLUE, SMU_ORANGE]
