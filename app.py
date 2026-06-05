@@ -111,3 +111,64 @@ with tab4:
     st.header("Graduate Outcomes")
 
     st.write("Graduate outcomes charts will go here.")
+
+with tab2:
+
+    st.header("Graduate Profile")
+
+    col1, col2 = st.columns(2)
+
+    # SCHOOL DISTRIBUTION
+    school_df = (
+        filtered["School"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
+
+    school_df.columns = ["School", "Percentage"]
+
+    fig_school = px.bar(
+        school_df,
+        x="Percentage",
+        y="School",
+        orientation="h",
+        text="Percentage",
+        color_discrete_sequence=[SMU_BLUE]
+    )
+
+    fig_school.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="inside"
+    )
+
+    with col1:
+        st.subheader("School Distribution")
+        st.plotly_chart(fig_school, use_container_width=True)
+
+    # GENDER DISTRIBUTION
+    gender_df = (
+        filtered["Gender"]
+        .value_counts(normalize=True)
+        .mul(100)
+        .reset_index()
+    )
+
+    gender_df.columns = ["Gender", "Percentage"]
+
+    fig_gender = px.pie(
+        gender_df,
+        names="Gender",
+        values="Percentage",
+        hole=0.5,
+        color_discrete_sequence=[SMU_ORANGE, SMU_BLUE]
+    )
+
+    fig_gender.update_traces(
+        textposition="inside",
+        textinfo="percent+label"
+    )
+
+    with col2:
+        st.subheader("Gender Distribution")
+        st.plotly_chart(fig_gender, use_container_width=True)
