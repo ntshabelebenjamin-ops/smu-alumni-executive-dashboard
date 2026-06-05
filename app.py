@@ -148,12 +148,12 @@ tab1, tab2, tab3, tab4 = st.tabs([
 with tab1:
 
 
-col1, col2 = st.columns(2)
+   col1, col2 = st.columns(2)
 
-col1.metric("Responses", f"{responses:,}")
-col2.metric("Employment Rate", f"{employment_rate}%")
+   col1.metric("Responses", f"{responses:,}")
+   col2.metric("Employment Rate", f"{employment_rate}%")
 
-st.info(
+   st.info(
     f"""
     A total of {responses:,} alumni responses are included in the analysis.
 
