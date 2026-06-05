@@ -162,7 +162,29 @@ with tab1:
 )
 
 
+# ==================================================
+# EXECUTIVE INSIGHTS
+# ==================================================
 
+top_school = filtered["School"].mode()[0]
+
+top_qualification_group = filtered["Qualification_Group"].mode()[0]
+
+st.success(
+    f"""
+    EXECUTIVE INSIGHTS
+
+    • Total responses analysed: {responses:,}
+
+    • Employment rate: {employment_rate}%
+
+    • Largest respondent group: {top_school}
+
+    • Most common qualification group: {top_qualification_group}
+
+    • Dashboard reflects graduate profile, employability and alumni engagement outcomes.
+    """
+)
 
 # ==================================================
 
