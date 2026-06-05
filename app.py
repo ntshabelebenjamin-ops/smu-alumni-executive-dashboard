@@ -147,3 +147,168 @@ st.dataframe(
     df,
     use_container_width=True
 )
+tab1, tab2, tab3, tab4 = st.tabs([
+    "Executive Overview",
+    "Graduate Profile",
+    "Employability",
+    "Graduate Outcomes"
+])
+with tab1:
+
+    col1,col2,col3,col4 = st.columns(4)
+
+    col1.metric("Responses", f"{responses:,}")
+    col2.metric("Employment Rate", f"{employment_rate}%")
+    col3.metric("Preparedness", f"{preparedness_rate}%")
+    col4.metric("Stay Connected", f"{connected_rate}%")
+
+    st.info(
+        f"""
+        A total of {responses:,} alumni responses were analysed.
+        The employment rate is currently {employment_rate}%.
+        """
+    )
+
+    st.subheader("Employment Status")
+
+    st.plotly_chart(fig, use_container_width=True)
+    with tab2:
+    st.header("Graduate Profile")
+    school_df = (
+    filtered["School"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+school_df.columns = ["School","Percentage"]
+fig_school = px.bar(
+    school_df,
+    x="Percentage",
+    y="School",
+    orientation="h",
+    text="Percentage",
+    color_discrete_sequence=[SMU_BLUE]
+)
+
+fig_school.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="inside"
+)
+
+st.subheader("School Distribution")
+
+st.plotly_chart(
+    fig_school,
+    use_container_width=True
+)
+gender_df = (
+    filtered["Gender"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+gender_df.columns = ["Gender","Percentage"]
+fig_gender = px.bar(
+    gender_df,
+    x="Gender",
+    y="Percentage",
+    text="Percentage",
+    color_discrete_sequence=[SMU_ORANGE]
+)
+
+fig_gender.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="inside"
+)
+
+st.subheader("Gender Distribution")
+
+st.plotly_chart(
+    fig_gender,
+    use_container_width=True
+)
+eth_df = (
+    filtered["Ethnicity"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+eth_df.columns = ["Ethnicity","Percentage"]
+fig_eth = px.bar(
+    eth_df,
+    x="Ethnicity",
+    y="Percentage",
+    text="Percentage",
+    color_discrete_sequence=[SMU_BLUE]
+)
+
+fig_eth.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="inside"
+)
+
+st.subheader("Ethnicity Distribution")
+
+st.plotly_chart(
+    fig_eth,
+    use_container_width=True
+)
+qual_group = (
+    filtered["Qualification_Group"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+qual_group.columns = [
+    "Qualification_Group",
+    "Percentage"
+]
+fig_qg = px.bar(
+    qual_group,
+    x="Qualification_Group",
+    y="Percentage",
+    text="Percentage",
+    color_discrete_sequence=[SMU_ORANGE]
+)
+
+fig_qg.update_traces(
+    texttemplate="%{text:.1f}%",
+    textposition="inside"
+)
+
+st.subheader("Qualification Group")
+
+st.plotly_chart(
+    fig_qg,
+    use_container_width=True
+)
+year_df = (
+    filtered["Graduation_Year"]
+    .value_counts()
+    .sort_index()
+    .reset_index()
+)
+
+year_df.columns = [
+    "Graduation_Year",
+    "Responses"
+]
+fig_year = px.line(
+    year_df,
+    x="Graduation_Year",
+    y="Responses",
+    markers=True
+)
+
+fig_year.update_layout(
+    title="Responses by Graduation Year"
+)
+
+st.plotly_chart(
+    fig_year,
+    use_container_width=True
+)
