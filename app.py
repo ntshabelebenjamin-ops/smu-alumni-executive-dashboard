@@ -58,6 +58,46 @@ df.columns = [
 "Alumni_Engagement_Interest",
 "Stay_Connected"
 ]
+# --------------------------------------------------
+
+# SIDEBAR FILTERS
+
+# --------------------------------------------------
+
+st.sidebar.header("Filters")
+
+school = st.sidebar.multiselect(
+"School",
+sorted(df["School"].dropna().unique()),
+default=sorted(df["School"].dropna().unique())
+)
+
+gender = st.sidebar.multiselect(
+"Gender",
+sorted(df["Gender"].dropna().unique()),
+default=sorted(df["Gender"].dropna().unique())
+)
+
+ethnicity = st.sidebar.multiselect(
+"Ethnicity",
+sorted(df["Ethnicity"].dropna().unique()),
+default=sorted(df["Ethnicity"].dropna().unique())
+)
+
+# --------------------------------------------------
+
+# FILTERED DATASET
+
+# --------------------------------------------------
+
+filtered = df[
+(df["School"].isin(school))
+&
+(df["Gender"].isin(gender))
+&
+(df["Ethnicity"].isin(ethnicity))
+]
+
 
 # --------------------------------------------------
 
