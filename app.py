@@ -14,12 +14,8 @@ layout="wide"
 )
 
 
-st.markdown(
-    """
-    **Prepared by:** Benjamin Ntshabele  
-    **Position:** Institutional Researcher  
-    **Department:** Academic Planning and Quality Assurance
-    """
+st.caption(
+    "Prepared by Benjamin Ntshabele | Institutional Researcher | Academic Planning and Quality Assurance Department"
 )
 # ==================================================
 
