@@ -139,6 +139,46 @@ filtered = df[
 # --------------------------------------------------
 
 responses = len(filtered)
+# --------------------------------------------------
+
+# FILTERS
+
+# --------------------------------------------------
+
+st.sidebar.header("Filters")
+
+school = st.sidebar.multiselect(
+"School",
+options=sorted(df["School"].dropna().unique()),
+default=sorted(df["School"].dropna().unique())
+)
+
+gender = st.sidebar.multiselect(
+"Gender",
+options=sorted(df["Gender"].dropna().unique()),
+default=sorted(df["Gender"].dropna().unique())
+)
+
+ethnicity = st.sidebar.multiselect(
+"Ethnicity",
+options=sorted(df["Ethnicity"].dropna().unique()),
+default=sorted(df["Ethnicity"].dropna().unique())
+)
+
+# --------------------------------------------------
+
+# CREATE FILTERED DATAFRAME
+
+# --------------------------------------------------
+
+filtered = df[
+(df["School"].isin(school))
+&
+(df["Gender"].isin(gender))
+&
+(df["Ethnicity"].isin(ethnicity))
+]
+
 
 employment_rate = round(
 (
