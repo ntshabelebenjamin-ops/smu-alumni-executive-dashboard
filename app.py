@@ -23,14 +23,16 @@ SMU_BLUE = "#214A9A"
 SMU_ORANGE = "#F37021"
 
 # ==================================================
+
 # LOAD DATA
+
 # ==================================================
 
 @st.cache_data
 def load_data():
-    return pd.read_excel(
-        "SMU_Alumni_Short_Survey_ANALYTICS_READY.xlsx"
-    )
+return pd.read_excel(
+"SMU_Alumni_Short_Survey_ANALYTICS_READY.xlsx"
+)
 
 df = load_data()
 
@@ -145,10 +147,12 @@ tab1, tab2, tab3, tab4 = st.tabs([
 # ==================================================
 
 with tab1:
-   col1, col2 = st.columns(2)
 
-   col1.metric("Responses", f"{responses:,}")
-   col2.metric("Employment Rate", f"{employment_rate}%")
+
+col1, col2 = st.columns(2)
+
+col1.metric("Responses", f"{responses:,}")
+col2.metric("Employment Rate", f"{employment_rate}%")
 
 st.info(
     f"""
@@ -167,7 +171,10 @@ st.info(
 
 with tab2:
 
-   st.header("Graduate Profile")
+
+st.header("Graduate Profile")
+
+# School Distribution
 
 school_df = (
     filtered["School"]
@@ -197,59 +204,60 @@ st.plotly_chart(
     width="stretch",
     key="school_chart"
 )
-    st.subheader("Gender Distribution")
 
-    gender_df = (
-        filtered["Gender"]
-        .value_counts(normalize=True)
-        .mul(100)
-        .reset_index()
-    )
+# Gender Distribution
 
-    gender_df.columns = ["Gender", "Percentage"]
+st.subheader("Gender Distribution")
 
-    fig_gender = px.pie(
-        gender_df,
-        names="Gender",
-        values="Percentage",
-        hole=0.5,
-        color_discrete_sequence=[SMU_ORANGE, SMU_BLUE]
-    )
+gender_df = (
+    filtered["Gender"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
 
-    fig_gender.update_traces(
-        textposition="inside",
-        textinfo="percent+label"
-    )
+gender_df.columns = ["Gender", "Percentage"]
 
-    st.plotly_chart(
-        fig_gender,
-        width="stretch",
-        key="gender_chart"
-    )
-    st.subheader("Ethnicity Distribution")
+fig_gender = px.pie(
+    gender_df,
+    names="Gender",
+    values="Percentage",
+    hole=0.5,
+    color_discrete_sequence=[SMU_ORANGE, SMU_BLUE]
+)
 
-    eth_df = (
-        filtered["Ethnicity"]
-        .value_counts(normalize=True)
-        .mul(100)
-        .reset_index()
-    )
+st.plotly_chart(
+    fig_gender,
+    width="stretch",
+    key="gender_chart"
+)
 
-    eth_df.columns = ["Ethnicity", "Percentage"]
+# Ethnicity Distribution
 
-    fig_eth = px.bar(
-        eth_df,
-        x="Ethnicity",
-        y="Percentage",
-        text="Percentage",
-        color_discrete_sequence=[SMU_ORANGE]
-    )
+st.subheader("Ethnicity Distribution")
 
-    st.plotly_chart(
-        fig_eth,
-        width="stretch",
-        key="ethnicity_chart"
-    )
+eth_df = (
+    filtered["Ethnicity"]
+    .value_counts(normalize=True)
+    .mul(100)
+    .reset_index()
+)
+
+eth_df.columns = ["Ethnicity", "Percentage"]
+
+fig_eth = px.bar(
+    eth_df,
+    x="Ethnicity",
+    y="Percentage",
+    text="Percentage",
+    color_discrete_sequence=[SMU_ORANGE]
+)
+
+st.plotly_chart(
+    fig_eth,
+    width="stretch",
+    key="ethnicity_chart"
+)
 
 
 # ==================================================
@@ -259,7 +267,9 @@ st.plotly_chart(
 # ==================================================
 
 with tab3:
-  st.header("Employability")
+
+
+st.header("Employability")
 
 emp_df = (
     filtered["Employment_Status"]
@@ -284,6 +294,7 @@ st.plotly_chart(
     key="employment_chart"
 )
 
+
 # ==================================================
 
 # TAB 4 - GRADUATE OUTCOMES
@@ -292,7 +303,8 @@ st.plotly_chart(
 
 with tab4:
 
-   st.header("Graduate Outcomes")
+
+st.header("Graduate Outcomes")
 
 st.write("Graduate outcomes visuals coming next.")
 
