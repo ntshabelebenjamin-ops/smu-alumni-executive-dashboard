@@ -125,83 +125,88 @@ filtered = df[
 ]
 
 # ==================================================
-
 # KPI CALCULATIONS
-
 # ==================================================
 
-filtered[
-    filtered["Employment_Status"]
-    .astype(str)
-    .str.contains("Employed", case=False, na=False)
-]["Employment_Status"].value_counts()
+responses = len(filtered)
+
+# Employment Rate (including Self-employed)
+
+employment_rate = round(
+    (
+        filtered["Employment_Status"]
+        .astype(str)
+        .str.strip()
+        .str.lower()
+        .isin([
+            "employed",
+            "self-employed",
+            "self employed"
+        ])
+    ).mean() * 100,
+    1
+)
 
 # ==================================================
-
-# TITLE
-
-# ==================================================
-
-
-# ==================================================
-
 # TABS
-
 # ==================================================
 
 tab1, tab2, tab3, tab4 = st.tabs([
-"Executive Overview",
-"Graduate Profile",
-"Employability",
-"Graduate Outcomes"
+    "Executive Overview",
+    "Graduate Profile",
+    "Employability",
+    "Graduate Outcomes"
 ])
 
 # ==================================================
-
 # TAB 1 - EXECUTIVE OVERVIEW
-
 # ==================================================
 
 with tab1:
 
+    col1, col2 = st.columns(2)
 
-   col1, col2 = st.columns(2)
+    col1.metric(
+        "Responses",
+        f"{responses:,}"
+    )
 
-   col1.metric("Responses", f"{responses:,}")
-   col2.metric("Employment Rate", f"{employment_rate}%")
+    col2.metric(
+        "Employment Rate (incl. Self-employed)",
+        f"{employment_rate}%"
+    )
 
-   st.info(
-    f"""
-    A total of {responses:,} alumni responses are included in the analysis.
+    st.info(
+        f"""
+        A total of {responses:,} alumni responses are included in the analysis.
 
-    Current employment rate: {employment_rate}%
-    """
-)
+        Current employment rate (including self-employed graduates): {employment_rate}%.
+        """
+    )
 
+    # ==================================================
+    # EXECUTIVE INSIGHTS
+    # ==================================================
 
-# ==================================================
-# EXECUTIVE INSIGHTS
-# ==================================================
+    top_school = filtered["School"].mode()[0]
 
-top_school = filtered["School"].mode()[0]
+    top_qualification_group = filtered["Qualification_Group"].mode()[0]
 
-top_qualification_group = filtered["Qualification_Group"].mode()[0]
+    st.success(
+        f"""
+        EXECUTIVE INSIGHTS
 
-st.success(
-    f"""
-    EXECUTIVE INSIGHTS
+        • Total responses analysed: {responses:,}
 
-    • Total responses analysed: {responses:,}
+        • Employment rate (including self-employed): {employment_rate}%
 
-    • Employment rate: {employment_rate}%
+        • Largest respondent group: {top_school}
 
-    • Largest respondent group: {top_school}
+        • Most common qualification group: {top_qualification_group}
 
-    • Most common qualification group: {top_qualification_group}
-
-    • Dashboard reflects graduate profile, employability and alumni engagement outcomes.
-    """
-)
+        • Dashboard reflects graduate profile, employability and alumni engagement outcomes.
+        """
+    )
 
 # ==================================================
 
