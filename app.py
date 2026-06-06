@@ -130,19 +130,10 @@ filtered = df[
 
 responses = len(filtered)
 
-# Employment Rate (including Self-employed)
-
 employment_rate = round(
     (
-        filtered["Employment_Status"]
-        .astype(str)
-        .str.strip()
-        .str.lower()
-        .isin([
-            "employed",
-            "self-employed",
-            "self employed"
-        ])
+        filtered["What is your current employment status?"]
+        .isin(["Employed", "Self-employed"])
     ).mean() * 100,
     1
 )
