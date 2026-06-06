@@ -130,16 +130,11 @@ filtered = df[
 
 # ==================================================
 
-responses = len(filtered)
-
-employment_rate = round(
-(
-filtered["Employment_Status"]
-.astype(str)
-.str.contains("Employed", case=False, na=False)
-).mean() * 100,
-1
-)
+filtered[
+    filtered["Employment_Status"]
+    .astype(str)
+    .str.contains("Employed", case=False, na=False)
+]["Employment_Status"].value_counts()
 
 # ==================================================
 
