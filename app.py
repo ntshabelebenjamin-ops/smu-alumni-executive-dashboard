@@ -132,11 +132,15 @@ responses = len(filtered)
 
 employment_rate = round(
     (
-        filtered["What is your current employment status?"]
+        filtered["Employment_Status"]
+        .astype(str)
+        .str.strip()
         .isin(["Employed", "Self-employed"])
     ).mean() * 100,
     1
 )
+
+
 
 # ==================================================
 # TABS
